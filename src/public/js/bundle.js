@@ -1,25 +1,28 @@
 const graficasMuertes = () => {
-    return new Promise ( (reject, resolve) => {
+    var host = document.domain
+    var port = window.location.port
+    console.log(port, host)
+    return new Promise((reject, resolve) => {
 
         try {
-            fetch('http://localhost:3000/grafica-pruebas')
-            .then( data => data.json()
-            .then( data => {
-                 reject(data)
-             }))
+            fetch(`http://${host+':'+port}/grafica-pruebas`)
+                .then(data => data.json()
+                    .then(data => {
+                        reject(data)
+                    }))
         } catch (error) {
             resolve(error)
         }
     })
 }
 
-const convertiData = ()=> {
-    return new Promise ( async (reject, resolve) => {
+const convertiData = () => {
+    return new Promise(async(reject, resolve) => {
 
         try {
             const data = await graficasMuertes()
             const data2020 = []
-    
+
             data.forEach(Element => {
                 const data2020Interna = [
                     Element.pais,
@@ -36,18 +39,18 @@ const convertiData = ()=> {
     })
 }
 
-const mostrargrafica = async () => {
+const mostrargrafica = async() => {
     const data1 = await graficasMuertes()
 
 
     var dataPrev = {
         2020: await convertiData()
     };
-    
+
     var data = {
         2020: await convertiData()
     };
-    
+
     var countries = [];
 
     data1.forEach(Element => {
@@ -61,10 +64,10 @@ const mostrargrafica = async () => {
     })
 
     console.log(countries)
-    
-    
+
+
     function getData(data) {
-        return data.map(function (country, i) {
+        return data.map(function(country, i) {
             return {
                 name: country[0],
                 y: country[1],
@@ -72,7 +75,7 @@ const mostrargrafica = async () => {
             };
         });
     }
-    
+
     var chart = Highcharts.chart('container', {
         chart: {
             type: 'column'
@@ -95,7 +98,7 @@ const mostrargrafica = async () => {
         tooltip: {
             shared: true,
             headerFormat: '<span style="font-size: 15px">{point.point.name}</span><br/>',
-            pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y} medals</b><br/>'
+            pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}</b><br/>'
         },
         xAxis: {
             type: 'category',
@@ -103,23 +106,23 @@ const mostrargrafica = async () => {
             labels: {
                 useHTML: true,
                 animate: true,
-                formatter: function () {
+                formatter: function() {
                     var value = this.value,
                         output;
-                        
-                        countries.forEach(function (country) {
-                            if (country.name === value) {
-                                output = country.flag;
+
+                    countries.forEach(function(country) {
+                        if (country.name === value) {
+                            output = country.flag;
                         }
                     });
-    
+
                     return '<span><img src="/public/banderas/' + output + '.png" style="width: 40px; height: 40px;"/><br></span>';
                 }
             }
         },
         yAxis: [{
             title: {
-                text: 'Gold medals'
+                text: 'Pruebas'
             },
             showFirstLabel: false
         }],
@@ -152,4 +155,3 @@ const mostrargrafica = async () => {
 }
 
 mostrargrafica();
-
