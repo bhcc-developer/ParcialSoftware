@@ -5,7 +5,7 @@ const graficasMuertes = () => {
     return new Promise((reject, resolve) => {
 
         try {
-            fetch(`http://${host}/grafica-pruebas`)
+            fetch(`https://${host}/grafica-pruebas`)
                 .then(data => data.json()
                     .then(data => {
                         reject(data)
