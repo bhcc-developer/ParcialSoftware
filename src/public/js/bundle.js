@@ -2,7 +2,7 @@ const graficasMuertes = () => {
     return new Promise ( (reject, resolve) => {
 
         try {
-            fetch('http://localhost:3000/grafica-pruebas')
+            fetch('https://parcialsofware.herokuapp.com/grafica-pruebas')
             .then( data => data.json()
             .then( data => {
                  reject(data)
