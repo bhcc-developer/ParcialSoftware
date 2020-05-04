@@ -1,11 +1,11 @@
 const graficasMuertes = () => {
     var host = document.domain
-        // var port = window.location.port
+    var port = window.location.port
     console.log(host)
     return new Promise((reject, resolve) => {
 
         try {
-            fetch(`https://${host}/grafica-pruebas`)
+            fetch(`http://${host}:${port}/grafica-pruebas`)
                 .then(data => data.json()
                     .then(data => {
                         reject(data)
