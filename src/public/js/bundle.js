@@ -1,7 +1,7 @@
 const graficasMuertes = () => {
     var host = document.domain
     var port = window.location.port
-    console.log(host)
+    console.log(host, ":", port)
     return new Promise((reject, resolve) => {
 
         try {
